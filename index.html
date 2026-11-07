@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ÍTALO SENSIBILIDADES</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#090909;color:white;
+ font-family:Arial,sans-serif;
+}
+header{
+ background:#170606;padding:25px 18px;
+ text-align:center;border-bottom:2px solid red;
+}
+h1{color:#ff2020;font-size:27px;margin:5px}
+header p{color:#aaa;font-size:12px}
+main{padding:18px;max-width:500px;margin:auto}
+.card{
+ background:#171717;border:1px solid #383838;
+ border-radius:14px;padding:18px;margin-bottom:16px;
+}
+h2{color:#ff2929;font-size:19px;margin-top:0}
+label{display:block;margin:17px 0 8px}
+input[type=range]{width:100%;accent-color:red}
+.value{color:#ff3030;font-weight:bold;float:right}
+select{
+ width:100%;padding:13px;background:#222;
+ color:white;border:1px solid #555;border-radius:8px;
+}
+button{
+ width:100%;padding:14px;border:0;border-radius:9px;
+ background:#e00000;color:white;font-weight:bold;
+ font-size:15px;margin-top:12px;
+}
+button:active{background:#990000}
+.result{
+ background:#260707;border:1px solid red;
+ padding:12px;border-radius:9px;margin-top:12px;
+ line-height:2;
+}
+footer{text-align:center;color:#777;padding:25px;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>🔥 ÍTALO SENSIBILIDADES</h1>
+<p>PAINEL GAMER • FREE FIRE</p>
+</header>
+
+<main>
+<div class="card">
+<h2>🎮 Configuração do jogador</h2>
+<label>Modelo do celular</label>
+<select id="device">
+<option>Samsung</option>
+<option>Motorola</option>
+<option>Xiaomi</option>
+<option>iPhone</option>
+<option>Outro celular</option>
+</select>
+<label>Estilo de jogo</label>
+<select id="style">
+<option>Equilibrado</option>
+<option>Movimentação rápida</option>
+<option>Precisão</option>
+</select>
+</div>
+
+<div class="card">
+<h2>🎯 Ajustar sensibilidades</h2>
+<div id="sliders"></div>
+<button onclick="resetar()">RESTAURAR PADRÃO</button>
+</div>
+
+<div class="card">
+<h2>🔴 Minha configuração</h2>
+<div class="result" id="result"></div>
+<button onclick="copiar()">COPIAR CONFIGURAÇÃO</button>
+<p id="msg" style="color:#ff5555;text-align:center"></p>
+</div>
+
+<div class="card">
+<h2>ℹ️ Sobre o aplicativo</h2>
+<p style="color:#bbb;line-height:1.6">
+O ÍTALO SENSIBILIDADES ajuda você a organizar
+e personalizar suas configurações de sensibilidade.
+Os valores são sugestões ajustáveis e não alteram
+automaticamente o Free Fire.
+</p>
+</div>
+</main>
+
+<footer>ÍTALO SENSIBILIDADES © 2026</footer>
+
+<script>
+const nomes=[
+"GERAL","PONTO VERMELHO",
+"2X","4X","MIRA AWM","OLHADINHA"
+];
+const padroes=[190,185,180,175,60,150];
+let valores=[...padroes];
+
+function montar(){
+ const area=document.getElementById("sliders");
+ area.innerHTML="";
+ nomes.forEach((nome,i)=>{
+  area.innerHTML+=`
+  <label>${nome}
+  <span class="value" id="v${i}">${valores[i]}</span>
+  </label>
+  <input type="range" min="0" max="200"
+  value="${valores[i]}" oninput="mudar(${i},this.value)">
+  `;
+ });
+ atualizar();
+}
+function mudar(i,v){
+ valores[i]=Number(v);
+ document.getElementById("v"+i).textContent=v;
+ atualizar();
+}
+function atualizar(){
+ document.getElementById("result").innerHTML=
+ nomes.map((n,i)=>n+": <b>"+valores[i]+"</b>").join("<br>");
+}
+function resetar(){
+ valores=[...padroes];
+ montar();
+}
+function copiar(){
+ const texto="ÍTALO SENSIBILIDADES\n"+
+ nomes.map((n,i)=>n+": "+valores[i]).join("\n");
+ if(navigator.clipboard){
+  navigator.clipboard.writeText(texto).then(()=>{
+   document.getElementById("msg").textContent="Configuração copiada!";
+  }).catch(()=>{document.getElementById("msg").textContent="Não foi possível copiar.";});
+ }
+}
+montar();
+</script>
+</body>
+  </html>
